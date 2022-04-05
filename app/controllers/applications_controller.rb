@@ -2,26 +2,16 @@ class ApplicationsController < ApplicationController
   def index
   end
 
-  def new
-
-  end
+  def new;end
 
   def create
     app = Application.new(applications_params)
-
     if app.save
       redirect_to "/applications/#{app.id}"
     else
-      redirect_to '/applications/new'
       flash[:alert] = "Error: #{error_message(app.errors)}"
+      render :new
     end
-    # if params.has_value?("")
-    #   redirect_to "/applications/new"
-    #   flash[:alert] = "Error: Please fill out all required fields"
-    # else
-    #   @app = Application.create!(applications_params)
-    #   redirect_to "/applications/#{@app.id}"
-    # end
   end
 
   def show

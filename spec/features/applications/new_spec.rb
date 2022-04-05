@@ -34,7 +34,5 @@ RSpec.describe 'new application page' do
 
     click_on("Submit")
     expect(page).to have_content("Error: City can't be blank")
-    expect(current_path).to eq("/applications/new")
-  
   end
 end

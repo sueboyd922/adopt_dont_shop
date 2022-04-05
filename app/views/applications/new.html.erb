@@ -4,12 +4,12 @@
 <%= form.label :name %>
 <%= form.text_field :name, value: params[:name] %><br/><br/>
 <%= form.label :street_address, "Street Address" %>
-<%= form.text_field :street_address %><br/><br/>
+<%= form.text_field :street_address, value: params[:street_address] %><br/><br/>
 <%= form.label :city %>
-<%= form.text_field :city %><br/><br/>
+<%= form.text_field :city, value: params[:city] %><br/><br/>
 <%= form.label :state %>
-<%= form.text_field :state %><br/><br/>
+<%= form.text_field :state, value: params[:state] %><br/><br/>
 <%= form.label :zipcode %>
-<%= form.text_field :zipcode %><br/><br/>
+<%= form.text_field :zipcode, value: params[:zipcode] %><br/><br/>
 <%= form.submit "Submit" %>
 <% end %>
