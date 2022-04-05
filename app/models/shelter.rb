@@ -22,9 +22,9 @@ class Shelter < ApplicationRecord
 
   def self.pending_apps
     joins(pets: :applications)
-    .where("applications.status = ?", "Pending")
-    .distinct
-    .order(:name)
+      .where("applications.status = ?", "Pending")
+      .distinct
+      .order(:name)
   end
 
   def self.name_and_city(shelter_id)
@@ -47,13 +47,11 @@ class Shelter < ApplicationRecord
     adoptable_pets.count
   end
 
-
   def shelter_pets_filtered_by_age(age_filter)
-    adoptable_pets.where('age >= ?', age_filter)
+    adoptable_pets.where("age >= ?", age_filter)
   end
 
   def average_age
     pets.where(adoptable: true).average(:age).to_f.round(2)
   end
-
 end

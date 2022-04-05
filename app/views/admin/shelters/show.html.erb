@@ -1,2 +1,8 @@
-<h3><%= @shelter.name %></h3>
+<h1><%= @shelter.name %></h1>
 <p>Located: <%= @shelter.city %></p>
+<div class="statistics">
+  <h3>Statistics:</h3>
+  <p><%= "There are #{@shelter_stats.adoptable_pet_count} adoptable pets at this shelter!" %></p>
+  <p><%= "Average age of adoptable pets currently at this shelter is #{@shelter_stats.average_age}" %></p>
+
+</div>
