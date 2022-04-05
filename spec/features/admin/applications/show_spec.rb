@@ -23,6 +23,7 @@ RSpec.describe 'admin application show page' do
     @shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
     @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
+    @pet_3 = @shelter_1.pets.create(name: "Sammy", breed: "daschund", age: 8, adoptable: true)
     @pet_app1 = PetApplication.create!(pet: @pet_1, application: @application_1)
     @pet_app2 = PetApplication.create!(pet: @pet_2, application: @application_1)
     @pet_app3 = PetApplication.create!(pet: @pet_1, application: @application_2)
@@ -90,6 +91,57 @@ RSpec.describe 'admin application show page' do
     within ".pet_app-#{@pet_app2.id}" do
       expect(page).to have_button("Approve")
       expect(page).to have_button("Reject")
+    end
+  end
+
+  it 'once a pet is on an approved application, that pet is no longer adoptable' do
+    visit "/admin/applications/#{@application_1.id}"
+    @application_1.pet_applications.each do |pet_app|
+      within ".pet_app-#{pet_app.id}" do
+        click_on("Approve")
+      end
+    end
+
+    approved_app = Application.find(@application_1.id)
+    expect(approved_app.status).to eq("Approved")
+
+    visit "/pets/#{@pet_1.id}"
+    expect(page).to have_content("false")
+
+    visit "/pets/#{@pet_2.id}"
+    expect(page).to have_content("false")
+
+    visit "/pets/#{@pet_3.id}"
+    expect(page).to have_content("true")
+  end
+
+  it 'can not be approved on a pending application if it is on an approved application' do
+    @pet_app5 = PetApplication.create!(pet: @pet_3, application: @application_2)
+
+    visit "/admin/applications/#{@application_1.id}"
+    @application_1.pet_applications.each do |pet_app|
+      within ".pet_app-#{pet_app.id}" do
+        click_on("Approve")
+      end
+    end
+
+    visit "/admin/applications/#{@application_2.id}"
+    within ".pet_app-#{@pet_app4.id}" do
+      expect(page).to have_button("Reject")
+      expect(page).not_to have_button("Approve")
+      expect(page).to have_content("Already Approved")
+    end
+
+    within ".pet_app-#{@pet_app3.id}" do
+      expect(page).to have_button("Reject")
+      expect(page).not_to have_button("Approve")
+      expect(page).to have_content("Already Approved")
+    end
+    
+    within ".pet_app-#{@pet_app5.id}" do
+      expect(page).to have_button("Reject")
+      expect(page).to have_button("Approve")
+      expect(page).not_to have_content("Already Approved")
     end
   end
 end
