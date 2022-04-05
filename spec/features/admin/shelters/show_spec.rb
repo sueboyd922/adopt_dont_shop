@@ -1,16 +1,50 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'admin shelter show page' do
-  before (:each) do
-    @shelter_1 = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
-    @shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
+RSpec.describe "admin shelter show page" do
+  before(:each) do
+    @shelter_1 = Shelter.create(name: "Aurora shelter", city: "Aurora, CO", foster_program: false, rank: 9)
+    @shelter_2 = Shelter.create(name: "RGV animal shelter", city: "Harlingen, TX", foster_program: false, rank: 5)
+    @shelter_3 = Shelter.create(name: "Fancy pets of Colorado", city: "Denver, CO", foster_program: true, rank: 10)
+
+    @pet_1 = @shelter_1.pets.create(name: "Mr. Pirate", breed: "tuxedo shorthair", age: 5, adoptable: true)
+    @pet_2 = @shelter_1.pets.create(name: "Clawdia", breed: "shorthair", age: 3, adoptable: true)
+
+    @pet_3 = @shelter_1.pets.create(name: "Sherman", breed: "maine coon", age: 7, adoptable: true)
+    @pet_4 = @shelter_2.pets.create(name: "Lucy", breed: "beagle", age: 2, adoptable: true)
+
+    @pet_5 = @shelter_3.pets.create(name: "Lucille Bald", breed: "sphynx", age: 8, adoptable: true)
+
+    @application_1 = Application.create!(name: "Anita Barker", street_address: "2468 Park Blvd.", city: "Denver", state: "CO", zipcode: "80202", status: "Pending")
+    @application_2 = Application.create!(name: "Frodo Baggins", street_address: "1 Shire Ave", city: "Denver", state: "CO", zipcode: "80202", status: "Rejected")
+
+    @pet_app_1 = PetApplication.create(pet: @pet_1, application: @application_1)
+    @pet_app_2 = PetApplication.create(pet: @pet_2, application: @application_1)
+    @pet_app_3 = PetApplication.create(pet: @pet_3, application: @application_1)
+    @pet_app_4 = PetApplication.create(pet: @pet_1, application: @application_2)
+    @pet_app_5 = PetApplication.create(pet: @pet_4, application: @application_2)
   end
 
-  it 'has the shelters name and location' do
+  it "has the shelters name and location" do
     visit "/admin/shelters/#{@shelter_1.id}"
     expect(page).to have_content(@shelter_1.name)
     expect(page).to have_content(@shelter_1.city)
     expect(page).not_to have_content(@shelter_1.rank)
     expect(page).not_to have_content(@shelter_1.foster_program)
+  end
+
+  it "has a section for statistics that shows the average age of all adoptable pets in a shelter" do
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+    within ".statistics" do
+      expect(page).to have_content("Average age of adoptable pets currently at this shelter is #{@shelter_1.average_age}")
+    end
+  end
+  it "shows the number of adoptable pets in the statistics section" do
+    visit "/admin/shelters/#{@shelter_1.id}"
+    save_and_open_page
+
+    within ".statistics" do
+      expect(page).to have_content("There are #{@shelter_1.adoptable_pet_count} adoptable pets at this shelter!")
+    end
   end
 end
