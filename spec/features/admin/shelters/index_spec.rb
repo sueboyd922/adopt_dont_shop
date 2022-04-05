@@ -55,4 +55,15 @@ RSpec.describe 'the admin shelters index' do
       expect(@shelter_2.name).not_to appear_before(@shelter_1.name)
     end
   end
+
+  it 'the name is a link to their show page' do
+    Shelter.all.each do |shelter|
+      visit "/admin/shelters"
+      click_on("#{shelter.name}")
+      expect(current_path).to eq("/admin/shelters/#{shelter.id}")
+      expect(page).to have_content(shelter.name)
+      expect(page).to have_content(shelter.city)
+      expect(page).not_to have_content(@pet_1.name)
+    end
+  end
 end
