@@ -10,10 +10,14 @@ class PetApplication < ApplicationRecord
   end
 
   def self.all_approved?
-    !any?{|pet_app| pet_app.status != "Approved"}
+    !any? { |pet_app| pet_app.status != "Approved" }
   end
 
   def self.all_inspected?
-    !any?{|pet_app| pet_app.status == "Pending"}
+    !any? { |pet_app| pet_app.status == "Pending" }
+  end
+
+  def self.pending
+    where(status: "Pending")
   end
 end
