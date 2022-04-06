@@ -52,4 +52,13 @@ RSpec.describe "admin shelter show page" do
       expect(page).to have_content("#{@shelter_1.adopted_pet_count} pets have been adopted from this shelter")
     end
   end
+
+  it "in the action required section I see a list of all pets for this shelter that have a pending application and have not yet been marked approved or rejected" do
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+    within ".action_required" do
+      expect(page).to have_content(@pet_1.name)
+      expect(page).to_not have_content(@pet_5.name)
+    end
+  end
 end
