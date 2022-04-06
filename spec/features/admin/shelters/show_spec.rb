@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe "admin shelter show page" do
   before(:each) do
-    @shelter_1 = Shelter.create(name: "Aurora shelter", city: "Aurora, CO", foster_program: false, rank: 9)
-    @shelter_2 = Shelter.create(name: "RGV animal shelter", city: "Harlingen, TX", foster_program: false, rank: 5)
-    @shelter_3 = Shelter.create(name: "Fancy pets of Colorado", city: "Denver, CO", foster_program: true, rank: 10)
+    @shelter_1 = Shelter.create(name: "Aurora shelter", city: "Aurora, CO", full_address: "13 Main St, Aurora, CO, 22439", foster_program: false, rank: 9)
+    @shelter_2 = Shelter.create(name: "RGV animal shelter", city: "Harlingen, TX", full_address: "21 Grove St, Harlingen, TX, 56567", foster_program: false, rank: 5)
+    @shelter_3 = Shelter.create(name: "Fancy pets of Colorado", city: "Denver, CO", full_address: "1452 8th Ave, Denver, CO, 21039", foster_program: true, rank: 10)
 
     @pet_1 = @shelter_1.pets.create(name: "Mr. Pirate", breed: "tuxedo shorthair", age: 5, adoptable: true)
     @pet_2 = @shelter_1.pets.create(name: "Clawdia", breed: "shorthair", age: 3, adoptable: true)
@@ -27,7 +27,7 @@ RSpec.describe "admin shelter show page" do
   it "has the shelters name and location" do
     visit "/admin/shelters/#{@shelter_1.id}"
     expect(page).to have_content(@shelter_1.name)
-    expect(page).to have_content(@shelter_1.city)
+    expect(page).to have_content(@shelter_1.full_address)
     expect(page).not_to have_content(@shelter_1.rank)
     expect(page).not_to have_content(@shelter_1.foster_program)
   end
