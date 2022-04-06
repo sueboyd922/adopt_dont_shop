@@ -5,5 +5,12 @@
   <p><%= "There are #{@shelter_stats.adoptable_pet_count} adoptable pets at this shelter!" %></p>
   <p><%= "Average age of adoptable pets currently at this shelter is #{@shelter_stats.average_age}" %></p>
   <p><%= "#{@shelter_stats.adopted_pet_count} pets have been adopted from this shelter" %></p>
-
+  <div class="action_required">
+    <h3>Action Required</h3>
+    <% @pending_pet_apps.each do |pet_app| %>
+      <div class=<%= "pet_app_#{pet_app.id}" %>>
+        <p><%= pet_app.pet.name %></p>
+        <p><%= "Approve or Reject #{pet_app.application.name}'s application " %><%= link_to "here" , "/admin/applications/#{pet_app.application.id}"%></p>
+      </div>
+    <% end %>
 </div>
