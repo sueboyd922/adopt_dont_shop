@@ -71,7 +71,6 @@ RSpec.describe "admin shelter show page" do
     end
 
     visit "/admin/shelters/#{@shelter_1.id}"
-    save_and_open_page
 
     expect(page).to have_content(@pet_1.name)
     expect(page).to have_content(@pet_3.name)
