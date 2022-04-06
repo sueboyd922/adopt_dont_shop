@@ -1,5 +1,10 @@
 class Admin::ApplicationsController < ApplicationController
 
+  def index
+    @applications = Application.all
+  end
+
+
   def show
     @application = Application.find(params[:id])
     if @application.pet_applications.all_approved?
