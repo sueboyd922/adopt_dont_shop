@@ -13,6 +13,7 @@ class PetApplicationsController < ApplicationController
   end
 
   def create
+    # require "pry"; binding.pry
     application = Application.find(params[:id])
     pet = Pet.find(params[:pet])
     PetApplication.create!(pet: pet, application: application)
