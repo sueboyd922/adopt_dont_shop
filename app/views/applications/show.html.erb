@@ -29,7 +29,7 @@
   <% @pets.each do |pet| %>
   <div class="pet-<%=pet.id%>">
     <%= "#{pet.name}"  %>
-    <%= button_to "Adopt this Pet", "/applications/#{@applicant.id}", params: {pet: pet.id} , method: :get%>
+    <%= button_to "Adopt this Pet", "/applications/#{@applicant.id}", params: {pet: pet.id} , method: :post%>
   </div>
   <% end %>
 

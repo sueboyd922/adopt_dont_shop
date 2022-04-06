@@ -61,7 +61,7 @@ RSpec.describe Shelter, type: :model do
       it "name_and_city" do
         shelter_search = Shelter.name_and_city(@shelter_2.id).first
         expect(shelter_search.name).to eq(@shelter_2.name)
-        expect(shelter_search.city).to eq(@shelter_2.city)
+        expect(shelter_search.full_address).to eq(@shelter_2.full_address)
         # expect(shelter_search.foster_program).to eq(nil)
         # expect(shelter_search.rank).not_to eq(@shelter_2.rank)
       end
