@@ -1,6 +1,7 @@
 class PetApplication < ApplicationRecord
   after_initialize :set_default
 
+  validates_presence_of :status
   belongs_to :pet
   belongs_to :application
 
