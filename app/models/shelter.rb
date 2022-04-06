@@ -31,6 +31,13 @@ class Shelter < ApplicationRecord
     find_by_sql ["SELECT name, full_address FROM shelters WHERE shelters.id = ?", shelter_id.to_i]
   end
 
+  def pets_need_attention
+    all_pet_apps = pets.joins(:applications).where("applications.status = ?", "Pending")
+    all_pet_apps.where("pet_applications.status = ?", "Pending").distinct
+    # all_pet_apps.where("pet_applications.status = ?", "Pending")
+    # require "pry"; binding.pry
+  end
+
   def pet_count
     pets.count
   end

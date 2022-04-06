@@ -20,8 +20,8 @@ RSpec.describe "admin shelter show page" do
     @pet_app_1 = PetApplication.create(pet: @pet_1, application: @application_1)
     @pet_app_2 = PetApplication.create(pet: @pet_2, application: @application_1)
     @pet_app_3 = PetApplication.create(pet: @pet_3, application: @application_1)
-    @pet_app_4 = PetApplication.create(pet: @pet_1, application: @application_2)
-    @pet_app_5 = PetApplication.create(pet: @pet_4, application: @application_2)
+    @pet_app_4 = PetApplication.create(pet: @pet_1, application: @application_2, status: "Approved")
+    @pet_app_5 = PetApplication.create(pet: @pet_4, application: @application_2, status: "Rejected")
   end
 
   it "has the shelters name and location" do
@@ -54,23 +54,27 @@ RSpec.describe "admin shelter show page" do
   end
 
   it 'has a section of pets on pending applications not yet marked approved or rejected' do
+    @application_3 = Application.create!(name: "Bilbo Baggins", street_address: "1 Shire Ave", city: "Denver", state: "CO", zipcode: "80202", status: "Pending")
+    PetApplication.create(pet: @pet_1, application: @application_3, status: "Pending")
     visit "/admin/shelters/#{@shelter_1.id}"
-
-      expect(page).to  have_content(@pet_1.name)
-      expect(page).to  have_content(@pet_2.name)
-      expect(page).to  have_content(@pet_3.name)
-
+    # save_and_open_page
+    expect(page).to  have_content(@pet_1.name)
+    expect(page).to  have_content(@pet_2.name)
+    expect(page).to  have_content(@pet_3.name)
 
     visit "/admin/applications/#{@application_1.id}"
-      within ".pet_app-#{@pet_app_1.id}" do
-        click_on("Approve")
-      end
+    within ".pet_app-#{@pet_app_1.id}" do
+      click_on("Approve")
+    end
+    within ".pet_app-#{@pet_app_2.id}" do
+      click_on("Reject")
+    end
 
     visit "/admin/shelters/#{@shelter_1.id}"
+    save_and_open_page
 
-      expect(page).to have_content(@pet_3.name)
-      expect(page).to have_content(@pet_2.name)
-      expect(page).not_to have_content(@pet_1.name)
-    
+    expect(page).to have_content(@pet_1.name)
+    expect(page).to have_content(@pet_3.name)
+    expect(page).not_to have_content(@pet_2.name)
   end
 end

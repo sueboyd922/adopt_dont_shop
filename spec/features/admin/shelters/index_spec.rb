@@ -63,7 +63,7 @@ RSpec.describe 'the admin shelters index' do
       expect(current_path).to eq("/admin/shelters/#{shelter.id}")
       expect(page).to have_content(shelter.name)
       # expect(page).to have_content(shelter.city)
-      expect(page).not_to have_content(@pet_1.name)
+      expect(page).not_to have_content(@application_1.street_address)
     end
   end
 end

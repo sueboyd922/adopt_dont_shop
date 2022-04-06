@@ -13,4 +13,8 @@ class Pet < ApplicationRecord
   def self.adoptable
     where(adoptable: true)
   end
+
+  # def self.need_attention
+  #   require "pry"; binding.pry
+  # end
 end

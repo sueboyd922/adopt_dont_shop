@@ -9,5 +9,14 @@
 </div>
 
 <h4>Action Required</h4>
-<% @shelter.pets.need_attention.each do |pet| %>
+<% @shelter_stats.pets_need_attention.each do |pet| %>
+<div class="pet_app-<%=pet.id%>">
+<p> <strong><%= pet.name %></strong></p>
+    <% pet.pet_applications.each do |pet_app| %>
+    <% if pet_app.status == "Pending" %>
+    <%= pet_app.application.name %>
+    <% end %>
+    <% end %>
+</div>
+
 <% end %>
