@@ -12,8 +12,8 @@ Shelter.destroy_all
 application_1 = Application.create!(name: "Anita Barker", street_address: "2468 Park Blvd.", city: "Denver", state: "CO", zipcode: "80202")
 application_2 = Application.create!(name: "Bob Barker", street_address: "1357 20th st.", city: "Golden", state: "CO", zipcode: "80209", description: "I'm a great pet parent!", status: "Pending")
 application_3 = Application.create!(name: "Doug Shruggs", street_address: "2024 Baker Blvd", city: "Littleton", state: "CO", zipcode: "80120", description: "I'm a great dog dad!", status: "Pending")
-application_4 = Application.create!(name: "Steve Darwin", street_address: "135 McCord Road", city: "Dallas", state: "TX", zipcode: 75001, description: "I really want a pet", status: "Approved")
-application_5 = Application.create!(name: "Rocco Ragazza", street_address: "1212 Waddle St.", city: "Medford", state: "MA", zipcode: 11027, description: "I really, really, want a pet", status: "Approved")
+application_4 = Application.create!(name: "Steve Darwin", street_address: "135 McCord Road", city: "Dallas", state: "TX", zipcode: 75001, description: "I really want a pet", status: "Pending")
+application_5 = Application.create!(name: "Rocco Ragazza", street_address: "1212 Waddle St.", city: "Medford", state: "MA", zipcode: 11027, description: "I really, really, want a pet", status: "Pending")
 application_6 = Application.create!(name: "Garbonzo Bean", street_address: "888 Humus Drive", city: "Sacramento", state: "CA", zipcode: 90411, description: "A pet would be nice", status: "Pending")
 
 shelter_1 = Shelter.create(name: "Aurora shelter", city: "Aurora, CO", foster_program: false, rank: 9)
@@ -29,9 +29,27 @@ pet_5 = Pet.create!(name: "Staniel", breed: "sheepadoodle", age: 2, adoptable: t
 pet_6 = Pet.create!(name: "Brodan", breed: "German Shorthair Pointer", age: 5, adoptable: true, shelter_id: shelter_4.id)
 pet_7 = Pet.create!(name: "Brophy", breed: "German Shorthair Pointer", age: 3, adoptable: true, shelter_id: shelter_4.id)
 pet_8 = Pet.create!(name: "Brostephanie", breed: "German Shorthair Pointer", age: 8, adoptable: true, shelter_id: shelter_2.id)
+pet_9 = Pet.create!(name: "Perdita", breed: "a cat for sure", age: 1, adoptable: true, shelter_id: shelter_2.id)
+pet_10 = Pet.create!(name: "Salem", breed: "shorthair", age: 6, adoptable: true, shelter_id: shelter_1.id)
+pet_11 = Pet.create!(name: "Macy", breed: "Sheltie", age: 2, adoptable: true, shelter_id: shelter_3.id)
+pet_12 = Pet.create!(name: "Izzy", breed: "Shipoo", age: 10, adoptable: true, shelter_id: shelter_3.id)
+pet_13 = Pet.create!(name: "Clover", breed: "shorthair", age: 2, adoptable: true, shelter_id: shelter_3.id)
+pet_14 = Pet.create!(name: "Ruby", breed: "mixed breed", age: 4, adoptable: true, shelter_id: shelter_3.id)
+pet_15 = Pet.create!(name: "Squirt", breed: "Portugese Water Dog", age: 4, adoptable: true, shelter_id: shelter_1.id)
+pet_16 = Pet.create!(name: "Hoosier", breed: "small white dog", age: 10, adoptable: true, shelter_id: shelter_2.id)
+
+PetApplication.create!(pet: pet_1, application: application_1)
+PetApplication.create!(pet: pet_2, application: application_1)
 
 PetApplication.create!(pet: pet_1, application: application_2)
 PetApplication.create!(pet: pet_2, application: application_2)
 
 PetApplication.create!(pet: pet_3, application: application_3)
 PetApplication.create!(pet: pet_4, application: application_3)
+
+PetApplication.create!(pet: pet_10, application: application_4)
+
+PetApplication.create!(pet: pet_11, application: application_5)
+
+PetApplication.create!(pet: pet_12, application: application_6)
+PetApplication.create!(pet: pet_13, application: application_6)
