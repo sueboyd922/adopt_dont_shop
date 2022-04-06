@@ -21,10 +21,6 @@ class ApplicationsController < ApplicationController
       else
         @pets =[]
       end
-      if params[:pet]!= nil
-        pet = Pet.find(params[:pet])
-        PetApplication.create!(pet_id: pet.id, application_id: @applicant.id)
-      end
   end
 
   def update
