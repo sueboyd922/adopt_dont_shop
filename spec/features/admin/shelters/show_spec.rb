@@ -53,14 +53,14 @@ RSpec.describe "admin shelter show page" do
     end
   end
 
-  it 'has a section of pets on pending applications not yet marked approved or rejected' do
+  it "has a section of pets on pending applications not yet marked approved or rejected" do
     @application_3 = Application.create!(name: "Bilbo Baggins", street_address: "1 Shire Ave", city: "Denver", state: "CO", zipcode: "80202", status: "Pending")
     PetApplication.create(pet: @pet_1, application: @application_3, status: "Pending")
     visit "/admin/shelters/#{@shelter_1.id}"
     # save_and_open_page
-    expect(page).to  have_content(@pet_1.name)
-    expect(page).to  have_content(@pet_2.name)
-    expect(page).to  have_content(@pet_3.name)
+    expect(page).to have_content(@pet_1.name)
+    expect(page).to have_content(@pet_2.name)
+    expect(page).to have_content(@pet_3.name)
 
     visit "/admin/applications/#{@application_1.id}"
     within ".pet_app-#{@pet_app_1.id}" do
@@ -76,5 +76,13 @@ RSpec.describe "admin shelter show page" do
     expect(page).to have_content(@pet_1.name)
     expect(page).to have_content(@pet_3.name)
     expect(page).not_to have_content(@pet_2.name)
+  end
+  it "in the action required section all pets have a link to their corresponding pending application" do
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+    within ".pet_app-#{@pet_2.id}" do
+      click_link "here"
+      expect(current_path).to eq("/admin/applications/#{@application_1.id}")
+    end
   end
 end
