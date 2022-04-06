@@ -47,6 +47,12 @@ class Shelter < ApplicationRecord
     adoptable_pets.count
   end
 
+  def adopted_pet_count
+    pets.joins(:applications)
+      .where(applications: {status: "Approved"})
+      .count
+  end
+
   def shelter_pets_filtered_by_age(age_filter)
     adoptable_pets.where("age >= ?", age_filter)
   end
