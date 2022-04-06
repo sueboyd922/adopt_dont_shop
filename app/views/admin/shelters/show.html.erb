@@ -14,7 +14,7 @@
 <p> <strong><%= pet.name %></strong></p>
     <% pet.pet_applications.each do |pet_app| %>
     <% if pet_app.status == "Pending" %>
-    <%= pet_app.application.name %>
+    <p><%= "Approve or Reject #{pet_app.application.name}'s application " %><%= link_to "here" , "/admin/applications/#{pet_app.application.id}"%></p>
     <% end %>
     <% end %>
 </div>
