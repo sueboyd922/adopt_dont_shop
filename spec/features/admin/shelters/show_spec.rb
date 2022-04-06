@@ -28,7 +28,6 @@ RSpec.describe "admin shelter show page" do
     visit "/admin/shelters/#{@shelter_1.id}"
     expect(page).to have_content(@shelter_1.name)
     expect(page).to have_content(@shelter_1.full_address)
-    expect(page).not_to have_content(@shelter_1.rank)
     expect(page).not_to have_content(@shelter_1.foster_program)
   end
 
@@ -41,7 +40,6 @@ RSpec.describe "admin shelter show page" do
   end
   it "shows the number of adoptable pets in the statistics section" do
     visit "/admin/shelters/#{@shelter_1.id}"
-    save_and_open_page
 
     within ".statistics" do
       expect(page).to have_content("There are #{@shelter_1.adoptable_pet_count} adoptable pets at this shelter!")

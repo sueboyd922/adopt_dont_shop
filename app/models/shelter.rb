@@ -28,7 +28,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.name_and_city(shelter_id)
-    find_by_sql ["SELECT name, city FROM shelters WHERE shelters.id = ?", shelter_id.to_i]
+    find_by_sql ["SELECT name, full_address FROM shelters WHERE shelters.id = ?", shelter_id.to_i]
   end
 
   def pet_count
