@@ -52,4 +52,25 @@ RSpec.describe "admin shelter show page" do
       expect(page).to have_content("#{@shelter_1.adopted_pet_count} pets have been adopted from this shelter")
     end
   end
+
+  it 'has a section of pets on pending applications not yet marked approved or rejected' do
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+      expect(page).to  have_content(@pet_1.name)
+      expect(page).to  have_content(@pet_2.name)
+      expect(page).to  have_content(@pet_3.name)
+
+
+    visit "/admin/applications/#{@application_1.id}"
+      within ".pet_app-#{@pet_app_1.id}" do
+        click_on("Approve")
+      end
+
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+      expect(page).to have_content(@pet_3.name)
+      expect(page).to have_content(@pet_2.name)
+      expect(page).not_to have_content(@pet_1.name)
+    
+  end
 end

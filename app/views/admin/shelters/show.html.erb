@@ -7,3 +7,7 @@
   <p><%= "#{@shelter_stats.adopted_pet_count} pets have been adopted from this shelter" %></p>
 
 </div>
+
+<h4>Action Required</h4>
+<% @shelter.pets.need_attention.each do |pet| %>
+<% end %>
